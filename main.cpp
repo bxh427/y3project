@@ -1,0 +1,50 @@
+#include <cmath>
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+
+using namespace std;
+
+int main()
+{
+	double thetastart;
+	double alpha;
+	double bounces;
+	double pi = acos(-1);
+	
+	cout << "This program calculates subsequent positions of bounces of a billiard ball within a circular table."
+		 << "\n" << "The circular table is set at the origin and the results are independent of the table radius."
+		 << "\n" << "The angle theta is the angle measured from the positive axis to the ball's location in radians."
+		 << "\n" << "The angle alpha is the angle measured from the tangent of the circle and indicates the"
+		 << "\n" << "direction of the ball's bounce. It is measured anticlockwise from the tangent in radians."
+		 << "\n" << "Please input the initial value of theta in units of pi and press [rtn]: ";
+	cin  >> thetastart;
+	cout << "Please input the value of alpha in units of pi and press [rtn]: ";
+	cin  >> alpha;
+	cout << "Please input the number of bounces required and press [rtn]: ";
+	cin	 >> bounces;
+	
+	
+	cout << "\n" << "For a billiard ball starting at a position "
+		 << thetastart << " pi from the positive x axis and making bounces of angle "
+		 << alpha << " pi, the following path is taken: \n"
+		 << setw(25) << "Bounce"
+		 << setw(25) << "Theta/rads"
+		 << setw(25) << "Theta/pi" << endl;
+	
+	double theta = thetastart;
+		 
+	for(int n=0; n<=bounces; n++)
+	{
+		cout << setw(25) << n
+			 << setw(25) << theta*pi
+			 << setw(25) << theta << endl;
+		
+		theta+=2*alpha;
+		
+		if(theta>=2) theta-=2;
+	}
+	
+	return 0;
+}
+
