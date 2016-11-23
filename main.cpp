@@ -28,17 +28,21 @@ int main()
 	cout << "\n" << "For a billiard ball starting at a position "
 		 << thetastart << " pi from the positive x axis and making bounces of angle "
 		 << alpha << " pi, the following path is taken: \n"
-		 << setw(25) << "Bounce"
+		 << setw(10) << "Bounce"
 		 << setw(25) << "Theta/rads"
-		 << setw(25) << "Theta/pi" << endl;
+		 << setw(25) << "Theta/pi"
+		 << setw(25) << "x position"
+		 << setw(25) << "y position" << endl;
 	
 	double theta = thetastart;
 		 
 	for(int n=0; n<=bounces; n++)
 	{
-		cout << setw(25) << n
+		cout << setprecision(18) << setw(10) << n
 			 << setw(25) << theta*pi
-			 << setw(25) << theta << endl;
+			 << setw(25) << theta
+			 << setw(25) << cos(theta)
+			 << setw(25) << sin(theta) << endl;
 		
 		theta+=2*alpha;
 		
