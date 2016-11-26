@@ -61,11 +61,20 @@ int main()
 	cin  >> bounces;
 
 	cout << setw(15) << "Bounce"
-		 << setw(25) << "x"
-		 << setw(25) << "y" << endl
+		 << setw(20) << "InitPosx"
+		 << setw(20) << "InitPosy"
+		 << setw(20) << "IncPosx"
+		 << setw(20) << "IncPosy"
+		 << setw(20) << "Normx"
+		 << setw(20) << "Normy"
+		 << setw(20) << "VdotN"
+		 << setw(20) << "VNNx"
+		 << setw(20) << "VNNy" << endl
 		 << setw(15) << 0
-		 << setw(25) << InitPos.xcomp
-		 << setw(25) << InitPos.ycomp << endl;
+		 << setw(20) << InitPos.xcomp
+		 << setw(20) << InitPos.ycomp
+		 << setw(20) << InitPos.xcomp
+		 << setw(20) << InitPos.ycomp << endl;
 	outs << setw(15) << "Bounce"
 		 << setw(25) << "x"
 		 << setw(25) << "y" << endl
@@ -112,9 +121,16 @@ int main()
 			IncPos = RIncSide(V_out,InitPos,a,b);
 		}
 		
-		cout << setw(15) << n
-			 << setw(25) << IncPos.xcomp
-			 << setw(25) << IncPos.ycomp << endl;
+		cout << setprecision(10) << setw(15) << n
+			 << setw(20) << InitPos.xcomp
+			 << setw(20) << InitPos.xcomp
+			 << setw(20) << IncPos.xcomp
+			 << setw(20) << IncPos.ycomp
+			 << setw(20) << Norm.xcomp
+			 << setw(20) << Norm.ycomp
+			 << setw(20) << VdotN
+			 << setw(20) << VNN.xcomp
+			 << setw(20) << VNN.ycomp << endl;
 		outs << setw(15) << n
 			 << setw(25) << IncPos.xcomp
 			 << setw(25) << IncPos.ycomp << endl;
