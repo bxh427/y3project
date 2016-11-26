@@ -64,7 +64,6 @@ int main()
 	
 	gnu	 << setw(25) << "#x"
 		 << setw(25) << "y" << endl
-		 << setw(25) << 0
 		 << setw(25) << xinit
 		 << setw(25) << yinit << endl;
 		
@@ -96,7 +95,7 @@ int main()
 		x_1 = xinit + Lambda*V_x_out;
 		y_1 = yinit + Lambda*V_y_out;
 		
-		cout << setprecision(18) << setw(25) << n
+		cout << setprecision(18) << setw(10) << n
 			 << setw(25) << x_1
 			 << setw(25) << y_1 << endl;
 		
