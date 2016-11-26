@@ -86,7 +86,7 @@ int main()
 		 << setw(25) << InitPos.xcomp
 		 << setw(25) << InitPos.ycomp << endl;
 	
-	for(int n=0;n<=bounces;n++)
+	for(int n=1;n<=bounces;n++)
 	{
 		// Find normal at surface
 		Norm = getNorm(InitPos.xcomp,InitPos.ycomp,a,b);
