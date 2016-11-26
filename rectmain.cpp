@@ -248,7 +248,7 @@ Vector TIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.ycomp = Pos.ycomp + L*Vinc.ycomp;
 	}
 	
-	if(grad < 0 && abs(grad) > abs((A/(Pos.xcomp-B))))
+	if(grad < 0 && grad > (A/(Pos.xcomp-B)))
 	{
 		INTERCEPT.xcomp = B;
 		L = (B-Pos.xcomp)/Vinc.xcomp;
@@ -278,7 +278,7 @@ Vector BIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.ycomp = Pos.ycomp + L*Vinc.ycomp;
 	}
 	
-	if(grad < 0 && abs(grad) < abs((-1*A/Pos.xcomp)))
+	if(grad < 0 && grad > (-1*A/Pos.xcomp))
 	{
 		INTERCEPT.xcomp = 0;
 		L = -1*(Vinc.xcomp/Pos.xcomp);
@@ -308,7 +308,7 @@ Vector LIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.xcomp = Pos.xcomp + L*Vinc.xcomp;
 	}
 	
-	if(grad<0 && abs(grad) > abs((-1*Pos.ycomp/B)))
+	if(grad<0 && grad < (-1*Pos.ycomp/B))
 	{
 		INTERCEPT.ycomp = 0;
 		L = -1*(Vinc.ycomp/Pos.ycomp);
@@ -338,7 +338,7 @@ Vector RIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.xcomp = Pos.xcomp + L*Vinc.xcomp;
 	}
 	
-	if(grad < 0 && abs(grad) > abs(((Pos.ycomp-A)/B)))
+	if(grad < 0 && grad < ((Pos.ycomp-A)/B))
 	{
 		INTERCEPT.ycomp = A;
 		L = (A-Pos.ycomp)/Vinc.ycomp;
