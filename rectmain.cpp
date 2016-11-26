@@ -60,22 +60,13 @@ int main()
 	cout << "Input the number of bounces required: ";
 	cin  >> bounces;
 
-	cout << setw(6) << "Bounce"
-		 << setw(20) << "InitPosx"
-		 << setw(20) << "InitPosy"
-		 << setw(20) << "IncPosx"
-		 << setw(20) << "IncPosy"
-		 << setw(20) << "Normx"
-		 << setw(20) << "Normy"
-		 << setw(20) << "VdotN"
-		 << setw(20) << "VNNx"
-		 << setw(20) << "VNNy" << endl
+	cout << setw(6)  << "Bounce"
+		 << setw(20) << "x"
+		 << setw(20) << "y" << endl
 		 << setw(6) << 0
 		 << setw(20) << InitPos.xcomp
-		 << setw(20) << InitPos.ycomp
-		 << setw(20) << InitPos.xcomp
 		 << setw(20) << InitPos.ycomp << endl;
-	outs << setw(15) << "Bounce"
+	outs << setw(15) << "Bounce"	
 		 << setw(25) << "x"
 		 << setw(25) << "y" << endl
 		 << setw(15) << 0
@@ -106,31 +97,24 @@ int main()
 			IncPos = TIncSide(V_out,InitPos,a,b);
 		}
 		
-		if(InitPos.ycomp==0)
+		else if(InitPos.ycomp==0)
 		{
 			IncPos = BIncSide(V_out,InitPos,a,b);
 		}
 		
-		if(InitPos.xcomp==0)
+		else if(InitPos.xcomp==0)
 		{
 			IncPos = LIncSide(V_out,InitPos,a,b);
 		}
 		
-		if(InitPos.xcomp==b)
+		else if(InitPos.xcomp==b)
 		{
 			IncPos = RIncSide(V_out,InitPos,a,b);
 		}
 		
 		cout << setprecision(10) << setw(6) << n
-			 << setw(20) << InitPos.xcomp
-			 << setw(20) << InitPos.ycomp
 			 << setw(20) << IncPos.xcomp
-			 << setw(20) << IncPos.ycomp
-			 << setw(20) << Norm.xcomp
-			 << setw(20) << Norm.ycomp
-			 << setw(20) << VdotN
-			 << setw(20) << VNN.xcomp
-			 << setw(20) << VNN.ycomp << endl;
+			 << setw(20) << IncPos.ycomp << endl;
 		outs << setw(15) << n
 			 << setw(25) << IncPos.xcomp
 			 << setw(25) << IncPos.ycomp << endl;
@@ -191,19 +175,19 @@ Vector getNorm(Vector POS, double A, double B)
 		NORM.ycomp = 0;
 	}
 	
-	if(POS.xcomp==B)
+	else if(POS.xcomp==B)
 	{
 		NORM.xcomp = -1;
 		NORM.ycomp = 0;
 	}
 	
-	if(POS.ycomp==0)
+	else if(POS.ycomp==0)
 	{
 		NORM.xcomp = 0;
 		NORM.ycomp = 1;
 	}
 	
-	if(POS.ycomp==A)
+	else if(POS.ycomp==A)
 	{
 		NORM.xcomp = 0;
 		NORM.ycomp = -1;
@@ -248,7 +232,7 @@ Vector TIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.ycomp = Pos.ycomp + L*Vinc.ycomp;
 	}
 	
-	if(grad < 0 && grad > (A/(Pos.xcomp-B)))
+	else if(grad < 0 && grad > (A/(Pos.xcomp-B)))
 	{
 		INTERCEPT.xcomp = B;
 		L = (B-Pos.xcomp)/Vinc.xcomp;
@@ -278,7 +262,7 @@ Vector BIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.ycomp = Pos.ycomp + L*Vinc.ycomp;
 	}
 	
-	if(grad < 0 && grad > (-1*A/Pos.xcomp))
+	else if(grad < 0 && grad > (-1*A/Pos.xcomp))
 	{
 		INTERCEPT.xcomp = 0;
 		L = -1*(Pos.xcomp/Vinc.xcomp);
@@ -308,7 +292,7 @@ Vector LIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.xcomp = Pos.xcomp + L*Vinc.xcomp;
 	}
 	
-	if(grad < (-1*Pos.ycomp/B))
+	else if(grad < (-1*Pos.ycomp/B))
 	{
 		INTERCEPT.ycomp = 0;
 		L = -1*(Pos.ycomp/Vinc.ycomp);
@@ -338,7 +322,7 @@ Vector RIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.xcomp = Pos.xcomp + L*Vinc.xcomp;
 	}
 	
-	if(grad < 0 && grad < ((Pos.ycomp-A)/B))
+	else if(grad < 0 && grad < ((Pos.ycomp-A)/B))
 	{
 		INTERCEPT.ycomp = A;
 		L = (A-Pos.ycomp)/Vinc.ycomp;
