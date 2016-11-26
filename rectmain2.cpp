@@ -75,7 +75,7 @@ int main()
 	gnu  << setw(25) << "#x"
 		 << setw(25) << "y" << endl
 		 << setw(25) << InitPos.xcomp
-		 << setw(25) << InitPos.ycomp << endl;*/
+		 << setw(25) << InitPos.ycomp << endl;
 	
 	for(int n=1;n<=bounces;n++)
 	{
