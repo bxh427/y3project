@@ -60,7 +60,7 @@ int main()
 	cout << "Input the number of bounces required: ";
 	cin  >> bounces;
 
-	cout << setw(10) << "Bounce"
+	cout << setw(6) << "Bounce"
 		 << setw(20) << "InitPosx"
 		 << setw(20) << "InitPosy"
 		 << setw(20) << "IncPosx"
@@ -121,7 +121,7 @@ int main()
 			IncPos = RIncSide(V_out,InitPos,a,b);
 		}
 		
-		cout << setprecision(10) << setw(10) << n
+		cout << setprecision(10) << setw(6) << n
 			 << setw(20) << InitPos.xcomp
 			 << setw(20) << InitPos.xcomp
 			 << setw(20) << IncPos.xcomp
