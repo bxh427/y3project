@@ -12,7 +12,7 @@ struct Vector
 };
 
 Vector getInitPos(char SIDEINIT,double A,double B);
-Vector getNorm(double XCOMP,double YCOMP,double A,double B);
+Vector getNorm(Vector POS,double A,double B);
 double DotProduct(Vector vec1,Vector vec2);
 Vector ScalVec(double scal,Vector vec);
 Vector VecOut(Vector VecIn,Vector Vec2);
@@ -89,7 +89,7 @@ int main()
 	for(int n=1;n<=bounces;n++)
 	{
 		// Find normal at surface
-		Norm = getNorm(InitPos.xcomp,InitPos.ycomp,a,b);
+		Norm = getNorm(InitPos,a,b);
 		
 		// Dot incoming vector with normal
 		VdotN = DotProduct(V_in,Norm);
@@ -123,7 +123,7 @@ int main()
 		
 		cout << setprecision(10) << setw(6) << n
 			 << setw(20) << InitPos.xcomp
-			 << setw(20) << InitPos.xcomp
+			 << setw(20) << InitPos.ycomp
 			 << setw(20) << IncPos.xcomp
 			 << setw(20) << IncPos.ycomp
 			 << setw(20) << Norm.xcomp
@@ -182,28 +182,28 @@ Vector getInitPos(char SIDEINIT, double A, double B)
 	return INITPOS;
 }
 
-Vector getNorm(double XCOMP, double YCOMP, double A, double B)
+Vector getNorm(Vector POS, double A, double B)
 {
 	Vector NORM;
-	if(XCOMP==0)
+	if(POS.xcomp==0)
 	{
 		NORM.xcomp = 1;
 		NORM.ycomp = 0;
 	}
 	
-	if(XCOMP==B)
+	if(POS.xcomp==B)
 	{
 		NORM.xcomp = -1;
 		NORM.ycomp = 0;
 	}
 	
-	if(YCOMP==0)
+	if(POS.ycomp==0)
 	{
 		NORM.xcomp = 0;
 		NORM.ycomp = 1;
 	}
 	
-	if(YCOMP==A)
+	if(POS.ycomp==A)
 	{
 		NORM.xcomp = 0;
 		NORM.ycomp = -1;
@@ -248,7 +248,7 @@ Vector TIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.ycomp = Pos.ycomp + L*Vinc.ycomp;
 	}
 	
-	if(grad < 0 && grad > (A/(Pos.xcomp-B)))
+	if(grad < 0 && abs(grad) > abs((A/(Pos.xcomp-B))))
 	{
 		INTERCEPT.xcomp = B;
 		L = (B-Pos.xcomp)/Vinc.xcomp;
@@ -278,7 +278,7 @@ Vector BIncSide(Vector Vinc,Vector Pos,double A,double B)
 		INTERCEPT.ycomp = Pos.ycomp + L*Vinc.ycomp;
 	}
 	
-	if(grad < 0 && grad > (-1*A/Pos.xcomp))
+	if(grad < 0 && abs(grad) > abs((-1*A/Pos.xcomp)))
 	{
 		INTERCEPT.xcomp = 0;
 		L = -1*(Vinc.xcomp/Pos.xcomp);
