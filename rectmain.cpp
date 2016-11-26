@@ -64,17 +64,17 @@ int main()
 		 << setw(25) << "x"
 		 << setw(25) << "y" << endl
 		 << setw(15) << 0
-		 << setw(25) << InitPos.xcomp;
+		 << setw(25) << InitPos.xcomp
 		 << setw(25) << InitPos.ycomp << endl;
 	outs << setw(15) << "Bounce"
 		 << setw(25) << "x"
 		 << setw(25) << "y" << endl
 		 << setw(15) << 0
-		 << setw(25) << InitPos.xcomp;
+		 << setw(25) << InitPos.xcomp
 		 << setw(25) << InitPos.ycomp << endl;
 	gnu  << setw(25) << "#x"
 		 << setw(25) << "y" << endl
-		 << setw(25) << InitPos.xcomp;
+		 << setw(25) << InitPos.xcomp
 		 << setw(25) << InitPos.ycomp << endl;
 	
 	for(int n=0;n<=bounces;n++)
