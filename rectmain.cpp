@@ -70,7 +70,7 @@ int main()
 		 << setw(20) << "VdotN"
 		 << setw(20) << "VNNx"
 		 << setw(20) << "VNNy" << endl
-		 << setw(15) << 0
+		 << setw(6) << 0
 		 << setw(20) << InitPos.xcomp
 		 << setw(20) << InitPos.ycomp
 		 << setw(20) << InitPos.xcomp
