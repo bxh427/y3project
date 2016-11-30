@@ -359,7 +359,7 @@ Vector RIncSide(Vector Vinc,Vector Pos,double A,double B)
 	double quada,quadb,quadc;
 	
 	// Right hand cap intercept
-	if(grad < ((Pos.ycomp-A)/(Pos.xcomp-B)) || grad < (Pos.ycomp/(Pos.xcomp-B)) || Vinc.xcomp > 0)
+	if(grad < ((Pos.ycomp-A)/(Pos.xcomp-B)) || grad > (Pos.ycomp/(Pos.xcomp-B)) || Vinc.xcomp > 0)
 	{
 		L = -2*(Vinc.xcomp*(Pos.xcomp-B) + Vinc.ycomp*(Pos.ycomp - 0.5*A))/(Vinc.xcomp*Vinc.xcomp + Vinc.ycomp*Vinc.ycomp);
 		INTERCEPT.xcomp = Pos.xcomp + L*Vinc.xcomp;
