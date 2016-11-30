@@ -342,7 +342,8 @@ Vector LIncSide(Vector Vinc,Vector Pos,double A,double B)
 	{
 		quada = Vinc.xcomp*Vinc.xcomp + Vinc.ycomp*Vinc.ycomp;
 		quadb = 2*(Vinc.xcomp*(Pos.xcomp-B)	+ Vinc.ycomp*(Pos.ycomp - 0.5*A));
-		quadc = B*B - 2*Pos.xcomp*B;
+		quadc = (Pos.xcomp-B)*(Pos.xcomp-B) + (Pos.ycomp-0.5*A)*(Pos.ycomp-0.5*A) - 0.25*A*A;
+		//quadc = B*B - 2*Pos.xcomp*B;
 		L = solveQuadEq(quada,quadb,quadc);
 		INTERCEPT.xcomp = Pos.xcomp + L*Vinc.xcomp;
 		INTERCEPT.ycomp = Pos.ycomp + L*Vinc.ycomp;
