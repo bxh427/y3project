@@ -1,3 +1,9 @@
+/* Ben Handley - 1423327
+Mathematical Billiards
+Bunimovich Stadium
+This code produces trajectory and phase space data for a billiard on a stadium shaped table of user-defined size.
+The coordinate axes has origin at bottom left corner of rectangular part of stadium. */
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -5,16 +11,21 @@
 
 using namespace std;
 
+// Define a vector struct
 struct Vector
 {
 	double xcomp;
 	double ycomp;
 };
 
+// Prototyping functions
+double getTheta(double ypos, double xpos, double A, double B);
+double getLength(Vector pos1, Vector pos2);
 Vector getInitPos(char SIDEINIT,double A,double B);
 Vector getNorm(Vector POS,double A,double B);
 double DotProduct(Vector vec1,Vector vec2);
 double solveQuadEq(double A, double B, double C);
+double sign(double F);
 Vector ScalVec(double scal,Vector vec);
 Vector VecOut(Vector VecIn,Vector Vec2);
 Vector TIncSide(Vector Vinc,Vector Pos,double A,double B);
@@ -24,23 +35,26 @@ Vector RIncSide(Vector Vinc,Vector Pos,double A,double B);
 
 int main()
 {
-	double a,b;
-	char sideinit;
-	Vector InitPos;
-	Vector V_in;
-	Vector Norm;
-	double VdotN;
-	Vector VNN;
-	Vector V_out;
-	Vector IncPos;
-	int bounces;
+	double a,b;		// Height and width of rectangle
+	char sideinit;	// Side from which ball starts
+	Vector InitPos;	// Initial position
+	Vector V_in;	// Incoming vector
+	Vector Norm;	// Normal at surface
+	double VdotN;	// Vector dotted with normal
+	Vector VNN;		// Dot product multiplied by normal
+	Vector V_out;	// Outgoing vector
+	Vector IncPos;	// Incident position
+	int bounces;	// Total number of bounces to be taken
 	
+	// Define file streams for user and gnuplot (trajectory and phase space)
 	ofstream outs;
 	ofstream gnu;
+	ofstream phase;
 	outs.open("Stadium.txt");
 	gnu.open("gnuStadium.txt");
+	phase.open("gnuStadPhase.txt");
 	
-	// Establish initial conditions
+	// User interface to obtain starting conditions and number of bounces
 	cout << "Input the height of the stadium: ";
 	cin  >> a;
 	cout << "Input the width of the rectangular part of the stadium: ";
@@ -51,33 +65,52 @@ int main()
 		 << "\n Left, curved = l"
 		 << "\n Right, curved = r" << endl;
 	cin  >> sideinit;
-	
 	InitPos = getInitPos(sideinit,a,b);
-	
 	cout << "Input the x component of the incoming vector: ";
 	cin  >> V_in.xcomp;
 	cout << "Input the y component of the incoming vector: ";
 	cin  >> V_in.ycomp;
 	cout << "Input the number of bounces required: ";
 	cin  >> bounces;
-
-	cout << setw(6)  << "Bounce"
+	Norm = getNorm(InitPos,a,b);
+	
+	// Output headers and initial conditions
+	cout << "\n" << "For a billiard ball starting at position ("
+		 << InitPos.xcomp << "," << InitPos.ycomp << ") and with initial vector ("
+		 << V_in.xcomp << "," << V_in.ycomp << ") the following path is taken: \n"
+		 << setw(6)  << "Bounce"
 		 << setw(20) << "x"
 		 << setw(20) << "y" << endl
 		 << setw(6) << 0
 		 << setw(20) << InitPos.xcomp
 		 << setw(20) << InitPos.ycomp << endl;
-	outs << setw(15) << "Bounce"	
-		 << setw(25) << "x"
-		 << setw(25) << "y" << endl
-		 << setw(15) << 0
-		 << setw(25) << InitPos.xcomp
-		 << setw(25) << InitPos.ycomp << endl;
+	outs << "\n" << "For a billiard ball starting at position ("
+		 << InitPos.xcomp << "," << InitPos.ycomp << ") and with initial vector ("
+		 << V_in.xcomp << "," << V_in.ycomp << ") the following path is taken: \n"
+		 << setw(6)  << "Bounce"
+		 << setw(20) << "x"
+		 << setw(20) << "y" << endl
+		 << setw(6) << 0
+		 << setw(20) << InitPos.xcomp
+		 << setw(20) << InitPos.ycomp << endl;
 	gnu  << setw(25) << "#x"
 		 << setw(25) << "y" << endl
 		 << setw(25) << InitPos.xcomp
 		 << setw(25) << InitPos.ycomp << endl;
+	phase  << setw(10) << "#bounce"
+		   << setw(25) << "theta"
+		   << setw(25) << "alpha"
+		   << setw(25) << "length"
+		   << setw(25) << "vx"
+		   << setw(25) << "vy" << endl
+		   << setw(10) << setprecision(15) << 0
+		   << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
+		   << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in)))
+		   << setw(25) << 0
+		   << setw(25) << V_in.xcomp 
+		   << setw(25) << V_in.ycomp << endl;
 	
+	// For loop to iterate over each bounce
 	for(int n=1;n<=bounces;n++)
 	{
 		// Find normal at surface
@@ -92,7 +125,7 @@ int main()
 		// Find outward vector
 		V_out = VecOut(V_in,VNN);
 		
-		// Find the incident point
+		// Find the incident point by running function appropriate to current side
 		if(InitPos.ycomp==a)
 		{
 			IncPos = TIncSide(V_out,InitPos,a,b);
@@ -113,6 +146,7 @@ int main()
 			IncPos = RIncSide(V_out,InitPos,a,b);
 		}
 		
+		// Print results
 		cout << setprecision(10) << setw(6) << n
 			 << setw(20) << IncPos.xcomp
 			 << setw(20) << IncPos.ycomp << endl;
@@ -121,57 +155,103 @@ int main()
 			 << setw(25) << IncPos.ycomp << endl;
 		gnu  << setw(25) << IncPos.xcomp
 			 << setw(25) << IncPos.ycomp << endl;
-			 
+		phase << setw(10) << setprecision(15) << n
+			  << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
+			  << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in)))
+			  << setw(25) << getLength(IncPos,InitPos)
+			  << setw(25) << V_out.xcomp
+			  << setw(25) << V_out.ycomp << endl;
+		
+		// Reset conditions	 
 		InitPos = IncPos;
 		V_in = V_out;
 	}
 	
 	outs.close();
 	gnu.close();
+	phase.close();
 	
 	return 0;
 }
 
+// Function to calculate angle theta location of the bounce
+double getTheta(double ypos, double xpos, double A, double B)
+{
+	// atan2 used to determine quadrant
+	double THETA = atan2((ypos-0.5*A),(xpos-0.5*B)); // Position shifted to measure theta in relation to central origin
+	double pi = acos(-1);
+	
+	// Enforce periodicity to keep theta positive
+	if(THETA<0)
+	{
+		THETA += 2*pi;
+	}
+	
+	return THETA;
+}
+
+// Function to calculate length of path between two points
+double getLength(Vector pos1, Vector pos2)
+{
+	double x2 = (pos1.xcomp-pos2.xcomp)*(pos1.xcomp-pos2.xcomp);
+	double y2 = (pos1.ycomp-pos2.ycomp)*(pos1.ycomp-pos2.ycomp);
+	return sqrt(x2+y2);
+}
+
+// Function to determine initial position depending on specified side
 Vector getInitPos(char SIDEINIT, double A, double B)
 {
 	Vector INITPOS;
-	double theta;
+	double angle;
 	
+	// If initial side is the top
 	if(SIDEINIT=='t')
 	{
+		// Set y component to be the maximum
 		INITPOS.ycomp = A;
+		
+		// Request x coordinate
 		cout << "Input the x coordinate between 0 and " << B << " : ";
 		cin  >> INITPOS.xcomp;
 	}
 	
+	// If initial side is the bottom
 	if(SIDEINIT=='b')
 	{
+		// Set y component to be zero
 		INITPOS.ycomp = 0;
+		
+		// Request x coordinate
 		cout << "Input the x coordinate between 0 and " << B << " : ";
 		cin  >> INITPOS.xcomp;
 	}
 	
+	// If initial side is the left
 	if(SIDEINIT=='l')
 	{
-		cout << "Input the angle theta from the negative x axis measured as if the end cap was a full circle"
+		// Request angle to determine position on end cap
+		cout << "Input the angle from the negative x axis measured as if the end cap was a full circle"
 			 << endl << "between pi/2 and -pi/2: ";
-		cin  >> theta;
-		INITPOS.xcomp = -A*0.5*cos(theta);
-		INITPOS.ycomp = A*0.5*(1+sin(theta));
+		cin  >> angle;
+		INITPOS.xcomp = -A*0.5*cos(angle);
+		INITPOS.ycomp = A*0.5*(1+sin(angle));
 	}
 	
+	// If initial side is the right
 	if(SIDEINIT=='r')
 	{
+		// Request angle to determine position on end cap
 		cout << "Input the angle theta from the positive x axis measured as if the end cap was a full circle"
 			 << endl << "between pi/2 and -pi/2: ";
-		cin  >> theta;
-		INITPOS.xcomp = B + A*0.5*cos(theta);
-		INITPOS.ycomp = A*0.5*(1+sin(theta));
+		cin  >> angle;
+		INITPOS.xcomp = B + A*0.5*cos(angle);
+		INITPOS.ycomp = A*0.5*(1+sin(angle));
 	}
 	
 	return INITPOS;
 }
 
+// Function to return normal depending on current side
 Vector getNorm(Vector POS, double A, double B)
 {
 	Vector NORM;
@@ -188,27 +268,58 @@ Vector getNorm(Vector POS, double A, double B)
 		NORM.ycomp = -1;
 	}
 	
-	else
+	else if(POS.xcomp<0)
 	{
-		NORM.xcomp = (-1*POS.xcomp)/sqrt((POS.xcomp*POS.xcomp)+(POS.ycomp*POS.ycomp));
-		NORM.ycomp = (-1*POS.ycomp)/sqrt((POS.xcomp*POS.xcomp)+(POS.ycomp*POS.ycomp));
+		// Using equation of normal of a circle
+		NORM.xcomp = (-2*POS.xcomp)/A;
+		NORM.ycomp = (A - 2*POS.ycomp)/A;
+	}
+	
+	else if(POS.xcomp>0)
+	{
+		// Using equation of normal of a circle
+		NORM.xcomp = (2*(B - POS.xcomp))/A;
+		NORM.ycomp = (A - 2*POS.ycomp)/A;
 	}
 	
 	return NORM;
 }
 
+// General function for producing a dot product of two vectors
 double DotProduct(Vector vec1, Vector vec2)
 {
 	return (vec1.xcomp*vec2.xcomp) + (vec1.ycomp*vec2.ycomp);
 }
 
+// Function to solve quadratic equation for given coefficients
 double solveQuadEq(double A, double B, double C)
 {
 	double Q;
-	Q = -0.5*(B-sqrt(B*B - 4*A*C));
+	Q = -0.5*(B+sign(B)*sqrt(B*B - 4*A*C));
 	return Q/A;
 }
 
+// Function to return the sign of a value F
+double sign(double F)
+{
+	double S;
+	if(F>0)
+	{
+		S=1;
+	}
+	else if(F==0)
+	{
+		S=0;
+	}
+	else if(F<0)
+	{
+		S=-1;
+	}
+	
+	return S;
+}
+
+// General function for multiplying a vector by a scalar
 Vector ScalVec(double scal, Vector vec)
 {
 	Vector scalvec;
@@ -218,6 +329,7 @@ Vector ScalVec(double scal, Vector vec)
 	return scalvec;
 }
 
+// Function to calculate outward vector
 Vector VecOut(Vector VecIn, Vector Vec2)
 {
 	Vector VOUT;
@@ -227,6 +339,7 @@ Vector VecOut(Vector VecIn, Vector Vec2)
 	return VOUT;
 }
 
+// Function to determine intercept if starting on top side
 Vector TIncSide(Vector Vinc,Vector Pos,double A,double B)
 {
 	Vector INTERCEPT;
@@ -267,6 +380,7 @@ Vector TIncSide(Vector Vinc,Vector Pos,double A,double B)
 	return INTERCEPT;
 }
 
+// Function to determine intercept if starting on bottom side
 Vector BIncSide(Vector Vinc,Vector Pos,double A,double B)
 {
 	Vector INTERCEPT;
@@ -306,6 +420,7 @@ Vector BIncSide(Vector Vinc,Vector Pos,double A,double B)
 	return INTERCEPT;
 }
 
+// Function to determine intercept if starting on left side
 Vector LIncSide(Vector Vinc,Vector Pos,double A,double B)
 {
 	Vector INTERCEPT;
@@ -314,7 +429,7 @@ Vector LIncSide(Vector Vinc,Vector Pos,double A,double B)
 	double quada,quadb,quadc;
 	
 	// Left hand cap intercept
-	if(grad > ((Pos.ycomp - A)/Pos.xcomp) || grad < (Pos.ycomp/Pos.xcomp) || Vinc.xcomp<0)
+	if(grad > ((Pos.ycomp - A)/Pos.xcomp) || grad < (Pos.ycomp/Pos.xcomp) || Vinc.xcomp<=0)
 	{
 		L = -2*(Vinc.xcomp*Pos.xcomp + Vinc.ycomp*(Pos.ycomp - 0.5*A))/(Vinc.xcomp*Vinc.xcomp + Vinc.ycomp*Vinc.ycomp);
 		INTERCEPT.xcomp = Pos.xcomp + L*Vinc.xcomp;
@@ -342,8 +457,7 @@ Vector LIncSide(Vector Vinc,Vector Pos,double A,double B)
 	{
 		quada = Vinc.xcomp*Vinc.xcomp + Vinc.ycomp*Vinc.ycomp;
 		quadb = 2*(Vinc.xcomp*(Pos.xcomp-B)	+ Vinc.ycomp*(Pos.ycomp - 0.5*A));
-		quadc = (Pos.xcomp-B)*(Pos.xcomp-B) + (Pos.ycomp-0.5*A)*(Pos.ycomp-0.5*A) - 0.25*A*A;
-		//quadc = B*B - 2*Pos.xcomp*B;
+		quadc = B*B - 2*Pos.xcomp*B;
 		L = solveQuadEq(quada,quadb,quadc);
 		INTERCEPT.xcomp = Pos.xcomp + L*Vinc.xcomp;
 		INTERCEPT.ycomp = Pos.ycomp + L*Vinc.ycomp;
@@ -352,6 +466,7 @@ Vector LIncSide(Vector Vinc,Vector Pos,double A,double B)
 	return INTERCEPT;
 }
 
+// Function to determine intercept if starting on right side
 Vector RIncSide(Vector Vinc,Vector Pos,double A,double B)
 {
 	Vector INTERCEPT;
@@ -360,7 +475,7 @@ Vector RIncSide(Vector Vinc,Vector Pos,double A,double B)
 	double quada,quadb,quadc;
 	
 	// Right hand cap intercept
-	if(grad < ((Pos.ycomp-A)/(Pos.xcomp-B)) || grad > (Pos.ycomp/(Pos.xcomp-B)) || Vinc.xcomp > 0)
+	if(grad < ((Pos.ycomp-A)/(Pos.xcomp-B)) || grad > (Pos.ycomp/(Pos.xcomp-B)) || Vinc.xcomp >= 0)
 	{
 		L = -2*(Vinc.xcomp*(Pos.xcomp-B) + Vinc.ycomp*(Pos.ycomp - 0.5*A))/(Vinc.xcomp*Vinc.xcomp + Vinc.ycomp*Vinc.ycomp);
 		INTERCEPT.xcomp = Pos.xcomp + L*Vinc.xcomp;
@@ -396,7 +511,3 @@ Vector RIncSide(Vector Vinc,Vector Pos,double A,double B)
 	
 	return INTERCEPT;
 }
-
-
-
-
