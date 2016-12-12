@@ -103,7 +103,7 @@ int main()
 		redPos1.ycomp = Pos1.ycomp/(b*b);
 		
 		// Define vector normal to ellipse surface
-		Norm = Normal(Pos1.xcomp, Pos1.ycomp);
+		Norm = Normal(redPos1.xcomp, redPos1.ycomp);
 				
 		// Dot product of vector with normal
 		VdotN = DotProduct(V_in, Norm);
