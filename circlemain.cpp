@@ -80,6 +80,9 @@ int main()
 		if(theta>=2) theta-=2;
 	}
 	
+	cout << "\nResults complete.\n"
+		 << "To plot this data, load 'circplot.gnu'.";
+	
 	outs.close();
 	gnu.close();
 	

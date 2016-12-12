@@ -144,6 +144,10 @@ int main()
 		V_in = V_out;
 	}
 	
+	cout << "\nResults complete.\n"
+		 << "To plot this data, open 'rectplot.gnu' and set a and b equal to the same height and width respectively."
+		 << "\nThen load this file in gnuplot.";
+	
 	outs.close();
 	gnu.close();
 	
