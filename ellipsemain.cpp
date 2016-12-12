@@ -71,7 +71,7 @@ int main()
 	
 	// Output headers and initial conditions
 	cout << "\n" << "For a billiard ball starting at a position "
-		 << thetastart << " pi from the positive x axis and with initial vector ("
+		 << thetainit << " pi from the positive x axis and with initial vector ("
 		 << V_in.xcomp << "," << V_in.ycomp << ") the following path is taken: \n"
 		 << setw(10) << "Bounce"
 		 << setw(20) << "x"
@@ -81,7 +81,7 @@ int main()
 		 << setw(20) << Pos1.ycomp << endl;
 		 
 	outs << "\n" << "For a billiard ball starting at a position "
-		 << thetastart << " pi from the positive x axis and with initial vector ("
+		 << thetainit << " pi from the positive x axis and with initial vector ("
 		 << V_in.xcomp << "," << V_in.ycomp << ") the following path is taken: \n"
 		 << setw(10) << "Bounce"
 		 << setw(20) << "x"
