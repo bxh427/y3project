@@ -82,6 +82,9 @@ int main()
 	Tang.xcomp = Norm.ycomp;
 	Tang.ycomp = -Norm.xcomp;
 	
+	theta = atan2(InitPos.ycomp-0.5*a,InitPos.xcomp-0.5*b);
+	s = getArcLength(theta,a,b,InitPos);
+	
 	// Output headers and initial conditions
 	cout << setw(25) << "#s"
 		 << setw(25) << "p" << endl
@@ -332,7 +335,7 @@ double getArcLength(double THETA, double A, double B, Vector POS)
 		S = 0.75*A*pi + 2*B + 0.5*A*atan2(-((B+A)*tan(THETA)),A);
 	}
 	
-	else if(THETA = 0)
+	else if(THETA == 0)
 	{
 		S=0;
 	}
