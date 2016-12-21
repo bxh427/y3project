@@ -309,7 +309,7 @@ double getArcLength(double THETA, double A, double B, Vector POS)
 	
 	if(THETA>0 && THETA<=atan2(A,B))
 	{
-		S = 0.5*A*atan2(((B+A)*tan(THETA))/A);
+		S = 0.5*A*atan2(((B+A)*tan(THETA)),A);
 	}
 	
 	else if(THETA>atan2(A,B) && THETA < atan2(A,B) + 0.5*pi)
@@ -319,17 +319,17 @@ double getArcLength(double THETA, double A, double B, Vector POS)
 	
 	else if(THETA > atan2(A,B) + 0.5*pi || THETA < -0.5*pi - atan2(A,B))
 	{
-		S = 0.25*A*pi + B + 0.5*A*atan2(((B+A)*tan(pi-THETA))/A);
+		S = 0.25*A*pi + B + 0.5*A*atan2(((B+A)*tan(pi-THETA)),A);
 	}
 	
-	else if(THETA < -atan2(A/B) && THETA > -0.5*pi - atan2(A/B))
+	else if(THETA < -atan2(A,B) && THETA > -0.5*pi - atan2(A,B))
 	{
 		S = 0.75*A*pi + B + POS.xcomp;
 	}
 	
-	else if(THETA > -atan2(A/B) && THETA < 0)
+	else if(THETA > -atan2(A,B) && THETA < 0)
 	{
-		S = 0.75*A*pi + 2*B + 0.5*A*atan2(-((B+A)*tan(THETA))/A);
+		S = 0.75*A*pi + 2*B + 0.5*A*atan2(-((B+A)*tan(THETA)),A);
 	}
 	
 	else if(THETA = 0)
