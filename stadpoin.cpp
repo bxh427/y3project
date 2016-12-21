@@ -72,10 +72,10 @@ int main()
 		 << "\n Right, curved = r" << endl;
 	cin  >> sideinit;
 	InitPos = getInitPos(sideinit,a,b);
-	cout << "Input the x component of the incoming vector: ";
+/*	cout << "Input the x component of the incoming vector: ";
 	cin  >> V_in.xcomp;
 	cout << "Input the y component of the incoming vector: ";
-	cin  >> V_in.ycomp;
+	cin  >> V_in.ycomp;*/
 	cout << "Input the number of bounces required: ";
 	cin  >> bounces;
 	Norm = getNorm(InitPos,a,b);
@@ -102,6 +102,8 @@ int main()
 		 << setw(25) << s
 		 << setw(25) << 0 << endl;
 	
+	V_in.xcomp = 10;
+	V_in.ycomp = 0.000001;
 	
 	for(int i=1;i<=70;i++)
 	{	
