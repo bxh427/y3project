@@ -86,10 +86,18 @@ int main()
 	s = getArcLength(theta,a,b,InitPos);
 	
 	// Output headers and initial conditions
-	cout << setw(25) << "#s"
-		 << setw(25) << "p" << endl
+	cout << setw(25) << "#i"
+		 << setw(25) << "n"
+		 << setw(25) << "s"
+		 << setw(25) << "p"
+		 << setw(25) << "E"
+		 << setw(25) << "vx"
+		 << setw(25) << "vy" << endl
+		 << setw(25) << 0
+		 << setw(25) << 0
 		 << setw(25) << s
-		 << setw(25) << 0 << endl;
+		 << setw(25) << 0
+		 << setw(25) << E << endl;
 	
 	outs << setw(25) << "#s"
 		 << setw(25) << "p" << endl
@@ -143,8 +151,13 @@ int main()
 			s = getArcLength(theta,a,b,InitPos);
 			
 			// Print results
-			cout << setw(25) << s
-				 << setw(25) << p << endl;
+			cout << setw(25) << i
+				 << setw(25) << n
+				 << setw(25) << s
+				 << setw(25) << p
+				 << setw(25) << E
+				 << setw(25) << V_in.xcomp
+				 << setw(25) << V_in.ycomp << endl;
 			outs << setw(25) << s
 				 << setw(25) << p << endl;
 			
