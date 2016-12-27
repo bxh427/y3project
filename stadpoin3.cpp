@@ -104,7 +104,8 @@ int main()
 		 << setw(20) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
 		 << setw(20) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
 	
-	Vector pvin = V_in;	// Unchanging V_in variable 
+	Vector pvin = V_in;	// Unchanging V_in variable
+	Vector pinitpos = InitPos; // Unchanging position variable
 	
 	for(int i=1;i<=I;i++)
 	{
@@ -167,6 +168,7 @@ int main()
 		
 		V_in = getVin(pvin);
 		pvin = V_in;
+		InitPos = pinitpos;
 	}
 	
 	cout << "\nResults complete.\n"
