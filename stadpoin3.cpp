@@ -75,11 +75,13 @@ int main()
 	Norm = getNorm(InitPos,a,b);
 	
 	// Output headers and initial conditions
-	cout << setw(25) << "#theta"
+	cout << setw(25) << "#i"
+		 << setw(25) << "#theta"
 		 << setw(25) << "alpha" << endl << setprecision(15)
 		 << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
 		 << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
-	gnu << setw(25) << "#theta"
+	gnu << setw(25) << "#i"
+		<< setw(25) << "#theta"
 		<< setw(25) << "alpha" << endl << setprecision(15)
 		<< setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
 		<< setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
@@ -125,9 +127,11 @@ int main()
 			}
 			
 			// Print results
-			cout << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
+			cout << setw(25) << i
+				 << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
 				 << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
-			gnu << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
+			gnu << setw(25) << i
+				<< setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
 				<< setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
 			
 			// Reset conditions	 
