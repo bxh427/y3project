@@ -87,7 +87,7 @@ int main()
 		 << setw(25) << InitPos.ycomp
 		 << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
 		 << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
-	gnu << setw(20) << "#i"
+	/*gnu << setw(20) << "#i"
 		 << setw(20) << "n"
 		 << setw(20) << "x"
 		 << setw(20) << "y"
@@ -102,7 +102,9 @@ int main()
 		 << setw(20) << V_in.xcomp
 		 << setw(20) << V_in.ycomp
 		 << setw(20) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
-		 << setw(20) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
+		 << setw(20) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;*/
+	gnu << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
+		<< setw(25s) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
 	
 	Vector pvin = V_in;	// Unchanging V_in variable
 	Vector pinitpos = InitPos; // Unchanging position variable
@@ -152,14 +154,16 @@ int main()
 				 << setw(25) << IncPos.ycomp
 				 << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
 				 << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
-			gnu << setw(20) << i
+			/*gnu << setw(20) << i
 				<< setw(20) << n
 				<< setw(20) << IncPos.xcomp
 				<< setw(20) << IncPos.ycomp
 				<< setw(20) << V_in.xcomp
 				<< setw(20) << V_in.ycomp
 				<< setw(20) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
-				<< setw(20) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
+				<< setw(20) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;*/
+			gnu << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
+				<< setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
 			
 			// Reset conditions	 
 			InitPos = IncPos;
