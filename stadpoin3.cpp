@@ -87,18 +87,22 @@ int main()
 		 << setw(25) << InitPos.ycomp
 		 << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
 		 << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
-	gnu << setw(25) << "#i"
-		 << setw(25) << "n"
-		 << setw(25) << "x"
-		 << setw(25) << "y"
-		 << setw(25) << "#theta"
-		 << setw(25) << "alpha" << endl << setprecision(15)
-		 << setw(25) << 0
-		 << setw(25) << 0
-		 << setw(25) << InitPos.xcomp
-		 << setw(25) << InitPos.ycomp
-		 << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
-		 << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
+	gnu << setw(20) << "#i"
+		 << setw(20) << "n"
+		 << setw(20) << "x"
+		 << setw(20) << "y"
+		 << setw(20) << "vx"
+		 << setw(20) << "vy"
+		 << setw(20) << "#theta"
+		 << setw(20) << "alpha" << endl << setprecision(15)
+		 << setw(20) << 0
+		 << setw(20) << 0
+		 << setw(20) << InitPos.xcomp
+		 << setw(20) << InitPos.ycomp
+		 << setw(20) << V_in.xcomp
+		 << setw(20) << V_in.ycomp
+		 << setw(20) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
+		 << setw(20) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
 	
 	Vector pvin = V_in;	// Unchanging V_in variable 
 	
@@ -147,12 +151,14 @@ int main()
 				 << setw(25) << IncPos.ycomp
 				 << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
 				 << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
-			gnu << setw(25) << i
-				<< setw(25) << n
-				<< setw(25) << IncPos.xcomp
-				<< setw(25) << IncPos.ycomp
-				<< setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
-				<< setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
+			gnu << setw(20) << i
+				<< setw(20) << n
+				<< setw(20) << IncPos.xcomp
+				<< setw(20) << IncPos.ycomp
+				<< setw(20) << V_in.xcomp
+				<< setw(20) << V_in.ycomp
+				<< setw(20) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
+				<< setw(20) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in))) << endl;
 			
 			// Reset conditions	 
 			InitPos = IncPos;
