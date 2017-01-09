@@ -1,7 +1,7 @@
 /* Ben Handley - 1423327
 Mathematical Billiards
 Bunimovich Stadium
-This code produces trajectory and phase space data for a billiard on a stadium shaped table of user-defined size.
+This code produces trajectory data for a billiard on a stadium shaped table of user-defined size.
 The coordinate axes has origin at bottom left corner of rectangular part of stadium. */
 
 #include <iostream>
@@ -75,15 +75,6 @@ int main()
 	Norm = getNorm(InitPos,a,b);
 	
 	// Output headers and initial conditions
-	cout << "\n" << "For a billiard ball starting at position ("
-		 << InitPos.xcomp << "," << InitPos.ycomp << ") and with initial vector ("
-		 << V_in.xcomp << "," << V_in.ycomp << ") the following path is taken: \n"
-		 << setw(6)  << "Bounce"
-		 << setw(20) << "x"
-		 << setw(20) << "y" << endl
-		 << setw(6) << 0
-		 << setw(20) << InitPos.xcomp
-		 << setw(20) << InitPos.ycomp << endl;
 	outs << "\n" << "For a billiard ball starting at position ("
 		 << InitPos.xcomp << "," << InitPos.ycomp << ") and with initial vector ("
 		 << V_in.xcomp << "," << V_in.ycomp << ") the following path is taken: \n"
@@ -97,18 +88,6 @@ int main()
 		 << setw(25) << "y" << endl
 		 << setw(25) << InitPos.xcomp
 		 << setw(25) << InitPos.ycomp << endl;
-	phase  << setw(10) << "#bounce"
-		   << setw(25) << "theta"
-		   << setw(25) << "alpha"
-		   << setw(25) << "length"
-		   << setw(25) << "vx"
-		   << setw(25) << "vy" << endl
-		   << setw(10) << setprecision(15) << 0
-		   << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
-		   << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in)))
-		   << setw(25) << 0
-		   << setw(25) << V_in.xcomp 
-		   << setw(25) << V_in.ycomp << endl;
 	
 	// For loop to iterate over each bounce
 	for(int n=1;n<=bounces;n++)
@@ -147,20 +126,11 @@ int main()
 		}
 		
 		// Print results
-		cout << setprecision(10) << setw(6) << n
-			 << setw(20) << IncPos.xcomp
-			 << setw(20) << IncPos.ycomp << endl;
-		outs << setw(15) << n
+		outs << setw(6) << n
 			 << setw(25) << IncPos.xcomp
 			 << setw(25) << IncPos.ycomp << endl;
 		gnu  << setw(25) << IncPos.xcomp
 			 << setw(25) << IncPos.ycomp << endl;
-		phase << setw(10) << setprecision(15) << n
-			  << setw(25) << getTheta(InitPos.ycomp,InitPos.xcomp,a,b)
-			  << setw(25) << asin(-1*DotProduct(V_in,Norm)/sqrt(DotProduct(V_in,V_in)))
-			  << setw(25) << getLength(IncPos,InitPos)
-			  << setw(25) << V_out.xcomp
-			  << setw(25) << V_out.ycomp << endl;
 		
 		// Reset conditions	 
 		InitPos = IncPos;
@@ -168,12 +138,12 @@ int main()
 	}
 	
 	cout << "\nResults complete.\n"
+		 << "To view this data, open 'Stadium.txt'.\n"
 		 << "To plot this data, open 'stadplot.gnu' and set a and b equal to the same height and width respectively."
-		 << "\nThen load this file in gnuplot.";
+		 << "\nThen load this file in gnuplot.\n";
 	
 	outs.close();
 	gnu.close();
-	phase.close();
 	
 	return 0;
 }
